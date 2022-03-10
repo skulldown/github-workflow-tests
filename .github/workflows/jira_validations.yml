@@ -1,0 +1,17 @@
+name: jira_validations
+
+on:
+  pull_request:
+  push:
+
+jobs:
+   pre-commit:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+    - uses: pre-commit/action@v2.0.3
+      with:
+        github-token: ${{ secrets.GITHUB_TOKEN }}
+        jira-token: ${{ secrets.IH_JIRA_API_SECRET_YM }}
+        jira-base-url: https://invitationhomes.atlassian.net
+        skip-comments: true
