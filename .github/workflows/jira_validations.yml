@@ -1,16 +1,29 @@
 name: jira_validations
 
-on:
-  pull_request:
-  push:
+on: [pull_request]
 
 jobs:
    pre-commit:
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v2
-      with:
-        github-token: ${{ secrets.GITHUB_TOKEN }}
-        jira-token: ${{ secrets.IH_JIRA_API_SECRET_YM }}
-        jira-base-url: https://invitationhomes.atlassian.net
-        skip-comments: true
+      - uses: cleartax/jira-lint@master
+        name: jira-lint
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          jira-token: ${{ secrets.IH_JIRA_API_SECRET_YM }}
+          jira-base-url: https://invitationhomes.atlassian.net
+          skip-comments: true
+    # - uses: actions/checkout@v2
+    # - uses: actions/setup-python@v1
+    #   name: Set up Python 3.8
+    #   with:
+    #       python-version: 3.8
+    # - name: Linting
+    #   run: |
+    #     pip install pre-commit
+    #     pre-commit run --all-files
+    #   with:
+    #     github-token: ${{ secrets.GITHUB_TOKEN }}
+    #     jira-token: ${{ secrets.IH_JIRA_API_SECRET_YM }}
+    #     jira-base-url: https://invitationhomes.atlassian.net
+    #     skip-comments: true
