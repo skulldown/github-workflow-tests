@@ -8,7 +8,7 @@ jobs:
       - name: print-vars
         run: echo ${{ env.GITHUB_TOKEN }}
         env:
-          GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
+          GITHUB_TOKEN: ${{secrets.IH_JIRA_API_SECRET_YM}}
       - uses: cleartax/jira-lint@v0.0.1
         name: jira-lint
         with:
