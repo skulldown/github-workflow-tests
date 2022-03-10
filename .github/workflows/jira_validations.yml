@@ -5,6 +5,10 @@ jobs:
   jira-lint:
     runs-on: ubuntu-latest
     steps:
+      - name: print-vars
+        run: echo ${{ env.GITHUB_TOKEN }}
+        env:
+          GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
       - uses: cleartax/jira-lint@v0.0.1
         name: jira-lint
         with:
