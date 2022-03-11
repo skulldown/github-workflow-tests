@@ -9,8 +9,7 @@ jobs:
         run: echo ${{ env.GITHUB_TOKEN }}
         env:
           GITHUB_TOKEN: ${{secrets.IH_JIRA_API_SECRET_YM}}
-      # - uses: skulldown/jira-lint@v1.1
-      - uses: invitation-homes/jira-lint@v1.0.0
+      - uses: skulldown/jira-lint@v1.1
         name: jira-lint
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
