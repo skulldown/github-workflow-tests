@@ -15,20 +15,15 @@ jobs:
       
       - name: Set pythonFiles
         id: set-py-files # Give it an id to handle to get step outputs in the outputs key above
-        run: echo "::set-output name=pyfiles::$(git diff --name-only -- '*.py' --diff-filter=ACMR HEAD origin/${{ github.event.pull_request.base.ref }} | uniq | jq -R -s -c 'split("\n")[:-1]' | jq -r '.[] | ("./" + .)' | jq -R -s -c 'split("\n")[:-1] | join(",")')"
+        run: echo "::set-output name=pyfiles::$(git diff --name-only --diff-filter=ACMRT HEAD origin/${{ github.event.pull_request.base.ref }} -- '*.py' | uniq | jq -R -s -c 'split("\n")[:-1]' | jq -r '.[] | ("./" + .)' | jq -R -s -c 'split("\n")[:-1] | join(",")')"
         # Define step output named dir base on ls command transformed to JSON thanks to jq
       - name: echo data
         run: echo ${{steps.set-py-files.outputs.pyfiles}}
   flake8_py3:
+    if: ${{ needs.pythonFiles.outputs.pyfiles != '' }}
     runs-on: ubuntu-latest
-    needs: [pythonFiles] # Depends on previous job
-    strategy:
-      matrix:
-        pyfiles: ${{ fromJson(needs.pythonFiles.outputs.pyfiles) }} # List matrix strategy from directories dynamically
+    needs: pythonFiles # Depends on previous job
     steps:
-      - name: Print python files
-        run: echo ${{matrix.pyfiles}}
-
       - name: Checkout
         uses: actions/checkout@v2
 
@@ -42,4 +37,4 @@ jobs:
         run: pip install flake8
 
       - name: Run flake8
-        run: python3.8 -m flake8 --filename=./test.py,./test2.py
+        run: python3.8 -m flake8 --filename=${{ needs.pythonFiles.outputs.pyfiles }}
