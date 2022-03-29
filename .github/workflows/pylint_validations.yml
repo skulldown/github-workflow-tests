@@ -21,10 +21,7 @@ jobs:
         run: echo ${{steps.set-py-files.outputs.pyfiles}}
   flake8_py3:
     runs-on: ubuntu-latest
-    needs: [pythonFiles] # Depends on previous job
-    strategy:
-      matrix:
-        pyfiles: ${{ needs.pythonFiles.outputs.pyfiles }} # List matrix strategy from directories dynamically
+    needs: pythonFiles # Depends on previous job
     steps:
       - name: Print python files
         run: echo ${{matrix.pyfiles}}
@@ -42,4 +39,4 @@ jobs:
         run: pip install flake8
 
       - name: Run flake8
-        run: python3.8 -m flake8 --filename=${{matrix.pyfiles}}
+        run: python3.8 -m flake8 --filename=${{ needs.pythonFiles.outputs.pyfiles }}
