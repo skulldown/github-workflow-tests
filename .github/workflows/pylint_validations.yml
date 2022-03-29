@@ -5,7 +5,7 @@ jobs:
   pythonFiles: # Job that list python files
     runs-on: ubuntu-latest
     outputs:
-      dir: ${{ steps.set-py-files.outputs.pyfiles }} # generate output name python files by using inner step output
+      pyfiles: ${{ steps.set-py-files.outputs.pyfiles }} # generate output name python files by using inner step output
     steps:
       - name: Clone Repo
         uses: actions/checkout@v2
