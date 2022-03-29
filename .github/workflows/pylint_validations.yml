@@ -1,0 +1,21 @@
+name: pylint_validation
+on: pull_request
+
+jobs:
+  flake8_py3:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Setup Python
+        uses: actions/setup-python@v3
+        with:
+          python-version: 3.8
+          architecture: x64
+ 
+      - name: Install flake8
+        run: pip install flake8
+      
+      - name: Run flake8
+        run: python3.8 -m flake8 --filename=./test.py
