@@ -20,12 +20,10 @@ jobs:
       - name: echo data
         run: echo ${{steps.set-py-files.outputs.pyfiles}}
   flake8_py3:
+    if: ${{ needs.pythonFiles.outputs.pyfiles != '' }}
     runs-on: ubuntu-latest
     needs: pythonFiles # Depends on previous job
     steps:
-      - name: Print python files
-        run: echo ${{matrix.pyfiles}}
-
       - name: Checkout
         uses: actions/checkout@v2
 
