@@ -24,7 +24,7 @@ jobs:
     needs: [pythonFiles] # Depends on previous job
     strategy:
       matrix:
-        pyfiles: ${{ fromJson(needs.pythonFiles.outputs.pyfiles) }} # List matrix strategy from directories dynamically
+        pyfiles: ${{ needs.pythonFiles.outputs.pyfiles }} # List matrix strategy from directories dynamically
     steps:
       - name: Print python files
         run: echo ${{matrix.pyfiles}}
