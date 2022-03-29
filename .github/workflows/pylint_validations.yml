@@ -11,7 +11,7 @@ jobs:
         uses: actions/checkout@v2
 
       - name: Get main branch
-        run: git fetch --no-tags --prune --depth=1 origin +refs/heads/main:refs/remotes/origin/main
+        run: git fetch --no-tags --prune --depth=1 origin +refs/heads/test:refs/remotes/origin/test
       
       - name: Set pythonFiles
         id: set-py-files # Give it an id to handle to get step outputs in the outputs key above
