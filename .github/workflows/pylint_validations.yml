@@ -24,7 +24,7 @@ jobs:
   flake8_py3:
     runs-on: ubuntu-latest
     needs: pythonFiles
-    if: ${{ github.repository == 'octo-org/octo-repo-prod' }}
+    if: ${{ needs.pythonFiles.outputs.pyfiles == 'octo-org/octo-repo-prod' }}
     steps:
       - name: Echo files to scan
         run: echo ${{ needs.pythonFiles.outputs.pyfiles }}
