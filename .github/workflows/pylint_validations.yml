@@ -24,6 +24,9 @@ jobs:
     needs: pythonFiles # Depends on previous job
     if: needs.pythonFiles.outputs.pyfiles != ''
     steps:
+      - name: Echo files to scan
+        uses: ${{ needs.pythonFiles.outputs.pyfiles }}
+
       - name: Checkout
         uses: actions/checkout@v2
 
