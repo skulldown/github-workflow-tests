@@ -22,7 +22,7 @@ jobs:
   flake8_py3:
     runs-on: ubuntu-latest
     needs: pythonFiles # Depends on previous job
-    if: ${{ needs.pythonFiles.outputs.pyfiles != '' }}
+    if: needs.pythonFiles.outputs.pyfiles != ''
     steps:
       - name: Echo files to scan
         run: echo ${{ needs.pythonFiles.outputs.pyfiles }}
