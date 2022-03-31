@@ -15,8 +15,10 @@ jobs:
       
       - name: Set pythonFiles
         id: set-py-files # Give it an id to handle to get step outputs in the outputs key above
-        run: echo "::set-output name=pyfiles::$(git diff --name-only --diff-filter=ACMRT HEAD origin/${{ github.event.pull_request.base.ref }} -- '*.py' | uniq | jq -R -r -s -c 'split("\n")[:-1]' | jq -r '.[] | ("./" + .)' | jq -R -s -c 'split("\n")[:-1] | join(",")')"
+        run: echo "::set-output name=pyfiles::$(git diff --name-only --diff-filter=ACMRT HEAD origin/${{ github.event.pull_request.base.ref }} -- '*.py' | uniq | jq -R -s -c 'split("\n")[:-1]' | jq -r '.[] | ("./" + .)' | jq -R -r -s -c 'split("\n")[:-1] | join(",")')"
         # Define step output named dir base on ls command transformed to JSON thanks to jq
+      - name: echo output
+        run: echo ${{steps.set-py-files.outputs.pyfiles}}
   flake8_py3:
     runs-on: ubuntu-latest
     needs: pythonFiles
